@@ -1,0 +1,94 @@
+Network Protocols defines the rule that which form should be used to send the message between system,
+ if system wants to talk to each other.
+
+ 7 Layers:
+ Application Layers
+ Presentation Layers
+ Session Layers
+ Transport Layers
+ Network Layers
+ Data Layers
+
+
+ Application Layers:
+
+ 2 Type --> Client Server Protocol and Peer to Peer Protocol.
+
+
+ Client Server Protocol - > HTTP(*), FTP, SMTP, Web Sockets(*), 
+ Peer to Peer - > WebRTC(*)
+
+
+ Client Server: 
+
+ Web Browser which is considered as a client
+ Web Server which is considered as Server
+
+ client ---> Request , Response---> Server
+
+ Client makes a request and server gives a response back.
+
+ Its a one-way communication.
+
+ HTTP, FTP, SMTP, all works the same way.
+
+ But take websocket, which is a bit different. WebSocket is a bidirectional communication.
+ Client can talk to server and server can talk to client. So is it peer to peer? No.
+
+
+ Example - Server, Client1, Client2 
+
+ Here server can talk to client 1 and client 2. Client 1 and client 2 can talk to server. But client cannot talk with each other. 
+
+
+ mainly used in messaging app or watsapp design.
+
+ Whenever a message comes, it should not always client asking if the message has come or not. Server should notify too that message has come.
+
+ ---------------------------------------------------------------------
+
+ HTTP -> 1 connection, we get webpage, then we jump from one page to other.
+
+ FTP -> 2 Connections. Control connection and Data connection. Data connection can disconnect but control connection is always there.
+
+ SMTP -> used with IMAP or POP  (SMTP -> used for sending mail)  , (IMAP -> Used for readingg/accessing the mail), POP3 -> Delete after reading
+
+ Here also a client and server architecture
+
+ mail send -> User Agent -> MTA Client -> MTA Sever -> User Agent -> Mail Recieved
+
+ --------------------------------------------------------------------
+
+ PEER TO PEER:
+
+ We have a server, client1 and client2. All can talk with each other.
+ It do not need to go to server to talk, machines can directly talk. Thats why its fast.
+
+ Transport Layer/Network Layer:
+
+ TCP/IP and UDP/IP
+
+ TCP( Ordering, Connection Maintained, Acknowledgement ) SLOW
+
+ UDP( no connection maintained, send as datagram, no ordering), FAST(bcz no ACK, no Oredering)
+
+
+ UDP is used in live streaming, song.. WEBRTC uses UDP to transfer data.
+
+ UDP -> Fast data process, data loss not an issue
+ Websocket -> Messaging app , Because if client1 send message to client2, Client1 will tell server and then server will need to talk to client2 that a message has come.
+
+ FTP is never used, becuse data connection inside FTP is not ecrypted,
+
+ We use HTTPS instead.
+
+
+
+
+
+
+
+
+
+
+
