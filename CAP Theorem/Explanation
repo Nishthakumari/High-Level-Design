@@ -1,0 +1,58 @@
+
+
+Desirable Properties of Distributed system with Replicated Data
+C-Cosistency
+A-Availability
+P-Pertition Tolerance
+
+Example of DIstributed System:
+
+A is an application.
+
+B is a DB node in India
+
+C is a DB node in US
+
+A can query from both B and C
+
+Data in both A and B is replicated and both are in sync with each other.
+
+We cant have all three Desirable properties in same system.
+
+We can have only two at a time.
+
+Why????
+
+Consistent - After succesful write in any node, we should get same/updated data on reading from any other node.
+
+Availability - All node ( B and C)  should at least respond, whether success or failure. Id all DB node are responding, They are available.
+
+Partition Tolarance -
+
+Suppose the connection between DB node B and Db node C has been broken, And application A is still able to query from DB, it does not know whether it is querying from B or C tho. A is still giving reqeuest and getting response. That means there is partition tolarnace. System is UP.
+
+Never tradeoff on Partition Tolerance. Partition Tolerance is always required.
+
+
+CA, CP, AP
+
+Suppose we create a break between B and C, but we want them to be avalable and consistent both.. Then To make it consistent , we will have to down one of the DB node. Thus here to make it consistent, availablity of a ADB node is sacrificed. All the read/write will be internally handled by one DB node only. - CP
+
+
+Suppose we want to keep our system available and consistent, we cannot make a partition between DB node, becuse it there is a break, System wont be consistent and We will have to stop write action to let Db remain conssistent. -CA
+
+If we want it to be available and partition tolerance oth, then our DB may not be consistent. - AP
+
+
+
+NOTE:
+Never tradeoff on Partition Tolerance. Partition Tolerance is always required. Beuse we use distributed system now a days. If there is a communication breakage, we cannot let a system down. So we have to choose one of CP or AP.
+
+Partition TOlerance.. Even after the partition., is your system up? Is Application A able to query ???
+
+
+
+
+
+
+
