@@ -1,0 +1,23 @@
+Strangler Pattern is used when we are refactoring to microservices. 
+We already have  a monolithics service.
+
+We have to make it into microservices. and from decomposition pattern, we know that in how many part
+should we divide it.
+
+How to refactor the code of monolithics to microservices?? It is goverened by strangler pattern.
+
+Suppose there ia a controller. And we are getting some API traffic in this controller.
+
+Now we have just started converting monolithics to microservices. We have just designed a flow in 
+microservices.
+
+Then we can take particular flow or 10% traffic in that microservices.
+
+supoose we sent 10% traffic to microservice, but it is giving some error. 
+So we will stop sending traffic to microservice and send all traffic to monolithics, untillt the bug is resolved.
+
+Slowly if we keep getting confidence, we will keep incresing traffic to microservice, ultimately to 100%.
+
+We cant never convert a single monolithics completely to microservice and then take traffic.
+
+
