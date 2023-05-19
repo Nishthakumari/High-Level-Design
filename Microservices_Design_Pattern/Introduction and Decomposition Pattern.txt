@@ -115,6 +115,116 @@ transaction management is little bit difficult.
 
 
 
+Decomposition Pattern:
+
+Micro + services
+micro  means small. but how much small??? and in how many??
+
+different phases of microservices:
+1. Decomposition
+2. Database
+3. Communication
+4. Integration
+
+supoose we have a monolitics service. Now Decomposition defines many pattern. Based on that pattern, we cab 
+break monolithics.
+
+Decomposition Pattern:
+decompose by business capability
+decompose by sub-domain
+
+
+Now we have created small small service. Now should we have Database for each one of them??
+or a common Database for all?
+
+Database:
+Database per service
+Database shared
+
+Now we have created many services . Now what are the way they will communicate to each other???
+
+Communication:
+API Communication
+Via event 
+
+
+Integration:
+Is microservice need to integrate with other level like user interface?? So how will they integrate with each other?
+There could be something like API gateways.
+
+
+There are the different phases to make a microservices.
+
+Last is observability/ Monitoring.
+
+In each phase, we have decide a pattern.
+
+------------------------------------------------
+
+Decomposition pattern:
+We have to decompose the application into may small application.
+
+But how much small?? this is what is told by decomposition pattern.
+
+There are two:
+
+By subdomain: DDD
+
+By business functionalities/capability 
+
+-----------------------------------------------
+
+Business capaility pattern: 
+
+Take an example of an online order application.
+What are the business functionalities??
+1. order management - manage the order
+2. product management - manage the inventary
+3. Account management - 
+4. Login
+5. Billing
+6. payment
+
+Here create service based on business funnction/capability.
+
+Challenge: 
+need to have good knowledge about all the functions in our business.
+
+here there is no definition of micro, It depends on how big a project is, depends on context.
+
+Order management is a big app in its own, but here it will be called microservice , becuse here we are 
+decomposing based on business capability.
+
+Here a module can be big in its own. So can we divide it in submodules or not??
+Thats why it is known as domain driven design.(DDD)
+
+Here order management is a domain and a domain can have multiple microservices.
+order tracking
+order placement
+
+Payment is one domain. There can be many microservices in payment. 
+forward payment: Paying to user A 
+reverse payment: coming refunds.
+
+Here find a domain and then find the several subdomain in it and make microservices.
+
+But in previous one, it was based on service.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
