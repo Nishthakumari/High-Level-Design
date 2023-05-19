@@ -1,0 +1,141 @@
+Two type of acrhitecture we have :
+
+Monolithics and Microservices.
+
+Monolithics (Also known as Legacy Application)
+
+Suppose we are making an online store, then we have created all the funtionalities in just one application.
+It takes care of evrything - generete order, inventary management, login, billing, payments.(All the 
+end-to-end  backend functionalities in same application) ---> Monolithics
+
+Disadvantage of Monolithics:
+1. Overload IDE (in GB)
+
+2. Scaling is very hard.
+Scaling mean grow. We grow when all our operations are fast.
+CI Jobs fast. (Devops, REgression run and push)
+
+If management of sub-operations are easy, then scaling is as much easy.
+
+If there is one line bug in code, then we will push, regresion and monitor whole code. It takes alot of time.
+
+If we want to change one line, this is very tight coupled application.
+
+Tight coupled means if we change one line, it may impact many domains. There is no domain, we have order
+code, payment code, product code, 
+
+If we are changing one line, it may happen that product is using same code, order is using same line of code,
+
+So both will be affected. Its very tight coupled.
+
+Whenever you have to change, you have to test everything. We will have o deploy whole application.
+It takes a lot of time in deploying, regression, 
+
+If we want to just scale a part like product, we cant. We need to scale whole appplication which is costly.
+
+Scaling is hard- >
+Debugging is hard
+CI Jobs, regresion run, deployment is very hard.
+
+Why microservices is needed????
+
+All the disadvantages of monolithics is an advantage of microservice.
+
+We breakdown a big application into smaller applications.
+
+Billing, Product, Order, Payment, Account management, Login,
+
+If we get anny bug in a service, then we just need to debug just a service. we just need to fix that and 
+deploy only that service. Thus its easier.
+
+Previously, we were worrying about whole application, but now we just need to work on a service.
+
+1. So, managing the component become very very easy.
+
+2. Scaling: If we are getting too much traffic in order, then we can just scale order, we can add more server
+there. Scaling is very easy and pocketfriendly, becuse we need not scale whole application.
+
+Whichever component I want, I can just scale that.
+
+What is the advantage and disadvantage of microservice???
+
+disadvantage of microservice:
+
+1. Breaking should be proper, and with some understanding.  Components/Sevices should bbe loosly coupled.
+
+If they are not loosely coupled, then for each request, we have to communicate a lot.
+
+All services have too much dependency on each other.
+
+If we have  to change one thing in a service, then we need to make chages inmany of the microservices.
+Too tighly coupled.
+
+We did not make loose coupled service.
+
+When one service talk to other service, then there is some latency, thus our latency can go up.
+
+It may happen that an API , which was working in 2-3 miliseconds in monolithics, but it is taking 
+10 ms to work due to latency. Latency can increase if we dont devide the components properly, if we dont decompose
+the monolithics system properly.
+
+Loosely coupled means we can scale a service, make some changes to it, without making an impact on other service.
+
+But if our microservices are tight coupled, then it may happen that we need to scale other also in effort to scale 
+one .
+
+2. Take there services s1, s2, s3. Suppose we make some code chnages in s3 and it goes live. Since we make 
+some code changes in s3, it started giving different response to s2, so s2 break. Now, supoose s2 also started 
+giving different response to s1. so s1 also breaks.
+
+Thus by looking at the error, it will be difficult to find which service is causing the error.
+
+S1 service team will tell s2 service team to check. s2 team will tell s3 people to check.
+
+Suppose s3 is culprit, but s3 is running properly but its client breaked. Here monitoring become a bit difficult.
+
+
+3**  transaction management- If we just have one db, if any reequest come, I can start the transaction.
+Once the db operation is completed, I can stop.
+
+But in microservices, each application have its own DB.Each of these can start or end their own trannsaction.
+
+But if we are getting a request, which will need to process more than one service.
+
+service s1 and s2 ,both will process the request.
+
+Here a common trannsaction is not possible, becuse there are 2 DB.
+
+What if one DB sucess but one DB failed.
+
+In monolithics, we just have one DB. If sucess, then we will persist.If fail, then we will rollback.
+
+If there are 10 table, 8 table sucess insertion, but 2 table failed insertion. then we will rollback.
+
+transaction management is little bit difficult.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
