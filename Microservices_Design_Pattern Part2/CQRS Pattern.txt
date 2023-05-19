@@ -1,0 +1,31 @@
+Command Query Request Segregation
+
+Command- create, update, delete
+
+Query - select
+
+Query join, how to do???
+
+S1-T1   S2-T2
+How to join both table??
+ we cant because they are in different database.
+
+ Now we will create a seperate view, which contain data of table1 and table2 both.
+
+ Create, update, delete will be done on its own DB.
+
+ But all the read operations will be done on new DB view.
+
+ Now the challenge is how will this DB view will keep itself updated???
+
+ Whenever create, delete, or update happens in any database, it will publish event to 
+ the view, Then view will perform all those operation on itsel too.
+
+
+
+ We can also use DB triggger or procedure.
+
+ Whenever there is create, update, or delete, then a procedure will run, and it will update view tooo.
+
+ 
+
