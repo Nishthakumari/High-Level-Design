@@ -1,0 +1,91 @@
+Why SAGA is needed??
+
+suppose we have 3 DB.
+
+DB1 (order) - T1 and T2
+
+DB2 (inventary) - T3 and T4
+
+DB3 (payment) - T5 and T6
+
+Place an order -  a transaction  - then we wil have to update all 3 DB.
+
+But let say, order row successfully created, inventary row successfully created , but failed while payment 
+record.
+
+Now the ACiD properties says that if all success or none.
+
+Now from where should we rollback? Each DB has its own ACID.
+
+Now, how the other two Db will rollback.
+
+Then SAGA comes.
+
+sequence of local transaction. 
+
+
+Order Txn    s1 (order) --event--> s2 (inventary) --event-->s3 (payment)
+                        <-- failure--            <--failure----            
+
+So, s1 will send an event to s2 after it has successfully changed its DB. Then s2 will send even to s3
+after it has successfully changed its DB.
+
+Now if there is failure in DB3. Then s3 will send a failure event to s2, then s2 will reverse its previous update.
+
+and s2 will also send failure event to s1, thus s1 will also reverse its previous transaction.
+
+So, all these local trannsaction are converted into a sequence
+
+SAGA is of two types:
+Chereography and Orchastration
+
+Chereography -- Message Even ----- s1 , s2, s3
+
+Here s1, s2 and s3 , all are listening to this Message event. If s3 fails it will send a failure message to 
+message even , seeing this, s2 will rollback and send a failure message in message even, lastly s1 will also
+rollback.
+
+Drawback - there can be a cycle of messages. Like from s1 to s2 to s1 to s2 to s1....
+
+Orchastration: Here we have a component, Orchastrator.
+
+It will call s1, if thats successful, then it will call s2, if thats successful, then it will call s3.
+
+If s3 fails , then it will rollback s2. If s2 fails/rollback, then it will rollback s1.
+
+example :
+
+Person A has to do payment to person B of 10  rupees.
+
+balance of A will decrease and balance of B will increase.
+
+How to store this??
+
+We can make two microservices.
+
+Balance service - amount 100
+
+Payment service - will record that Person A have paid Person B , 100 ruppes.
+
+Then what is challenge here in these microservices??
+
+supoose a trannsaction comes. i.e Person A has to Pay Person B , 10 rupees.
+
+Now here, Suppose we have deducted 10 rupees from balance. But now while updating this trannsaction in 
+payment, this failed. So how will we rollback>????
+
+
+Here it can be solved by the use of  SAGA pattern
+After failure in payment service, it will publish a failure event.
+
+Suppose balance service is listening to that message event . (Chereography)
+
+Then it will listen that transaction1 has failed. Then balance service will do compensation transaction.
+And it will make the balance as 100 again.
+
+
+
+
+
+
+
