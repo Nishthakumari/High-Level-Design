@@ -1,0 +1,82 @@
+2 Ways to data management:
+
+1. Database for each individual service******
+2. shared Database
+
+Suppose we divide monolithics into three service.
+
+s1  s2 s3
+
+Each of these service have its own DB.
+
+But in shared Database, each of these service uses one and same service.
+
+Why shared database is not successful, and we always use individual server for each service?
+
+Lets take an online E-Commerce Application. 
+s1(Order)
+s2(inventary)
+s3(payment)
+
+Suppose we are getting many orders, but there are very less inventory. Then we need to scale our databse for 
+order. Now if we have a common database, then we need to scale whole database.
+
+We cannot scale for individual component. It will scale for all component instead.
+
+-> Suppose there are 10 tables in our database, and s3 want to delete something in table 10. Can it delete 
+it directly??
+
+No, it cant . It need to check that if I delete, will other services will also get impacted??
+
+This sis not scalable.
+
+Easy/advantage
+Easy join
+Maintaing transactional properties/ ACID peroperties. - Suppose we have o insert in 10 table, and there is 
+a failure while updating 8th table, then we can easily rollback it.
+
+
+
+1. Database for each individual service******
+
+But in this case, we can maintain local transaction/ACID properties for each databse.
+
+But suppose we get an order which touches all there DB of service1 and service2 and service3.
+
+ACID properties works on a single DB.
+
+This is a Challenge. And this Challenge is solve by SAGA pattern.
+
+Suppose we want to join table, which are in different databse ?? Then how will we join ---> This is solve by
+CQRS pattern.
+
+--------------------------------------------------
+
+databse per service.
+
+Each service has a database. And the agreement is that each service cannot query database of other service.
+
+If s2 wants some data from DB from s3, then it cant query directly from s3 DB. Rather it will ask the 
+s3 service for data using API and will get the data as the response.
+
+Each DB can be of different types - Relation DB SQl, NoSQL mongoDb, Postgres.
+
+Each service can change its DB without affecting other services. So maintainance is easier.
+
+We can scale a DB of a particular service.
+
+Scaling is easy
+
+Two disadvantage : join and transaction
+
+trannsaction - SAGA
+join - CQRS
+
+
+
+
+
+
+
+
+
