@@ -1,0 +1,466 @@
+We will cover a lot of topics of HLD in this, like CDN,  Horizontal and Vertical Scaling, Caching, Load Balancer.
+We have to set up such system so that it can handle more than millions of request.
+
+1. Single Server
+2. Application and DB Server Seperation.
+3. Load Balancer + Multiple App servers
+4. Database Replication
+5. Cache
+6. CDN
+7. Data Center
+8. Messaging Queue.
+9. Database Scaling
+
+
+We will cover a lot of topics of HLD in this, like CDN,  Horizontal and Vertical Scaling, Caching, Load Balancer. 
+
+We have to set up such system so that it can handle more than millions of request. 
+
+ 
+
+ 
+
+1. Single Server 
+
+2. Application and DB Server Seperation. 
+
+3. Load Balancer + Multiple App servers 
+
+4. Database Replication 
+
+5. Cache 
+
+6. CDN 
+
+7. Data Center 
+
+8. Messaging Queue. 
+
+9. Database Scaling 
+
+ 
+
+ 
+
+Suppose we have 0 user. 
+
+ 
+
+We have client (mobile or web). Client directly talk with the server. 
+
+ 
+
+We have application + DB, both in same server. We host this DB inside that server only. 
+
+ 
+
+ 
+
+
+ 
+
+So this is simple. We have made a single server. 
+
+ 
+
+Now, we are gonna make second point.  
+
+ 
+
+2. Application and DB Server Seperation. 
+
+ 
+
+For this, we have to add one new layer, called mid-tier layer, in which we will host our application server. Here only business logic will work.  
+
+ 
+
+And this application server will be in contact of our DB. 
+
+ 
+
+
+ 
+
+ 
+
+Why do we need this? 
+
+ 
+
+Lets suppose we want to grow application and DB independently, then we have to remove dependency. 
+
+So, to remove dependency, or make independent, we need to have seperate server for both. 
+
+ 
+
+Thus, both now can grow independently. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+3. Load Balancer + Multiple App servers 
+
+ 
+
+If we want to take more traffic, we will have to change the application server, We are changing something in mid-tier. Now we will have multiple app servers. But client cannot directly talk with these. So, we need a layer in between application server and client, which is known as load balancer. 
+
+ 
+
+ 
+
+Client will only talk to load balancer.  
+
+ 
+
+Load Balancer will decide where should we forward our request 
+
+ 
+
+Load balancer comes with security, privacy. 
+
+Because Load balancer and application server talks on private IP. 
+
+ 
+
+Client on internet cannot call application server directly. 
+
+ 
+
+Load balancer and application layer talks on private IP. So it little bit brings one layer of security. 
+
+ 
+
+Load Balancer as name suggests, it divide all incoming traffic equally.  
+
+ 
+
+And why do we need multiple application server? 
+
+Because we know that if we have just one application server.  
+
+ 
+
+Suppose, there is a get api. Hoe many request a server can handle is limited, after that it will stop 
+dropping requests. Thats y we need multiple app servers. 
+
+ 
+
+4. Database Replication 
+
+ 
+
+How to improve data-tier?? Using databse replication. 
+
+ 
+Master Slave Concept. 
+
+We have a master DB and multiple slave DB. And they replicate with each other. 
+
+All the write request will go to master. Create/update 
+
+And all the read will happen from slave. 
+
+Now if a DB node fail, our application will not get down. 
+
+Even though one DB fails, we have replicas. 
+
+Other DB will handle our requests. 
+
+ 
+
+If master DB fails, then a slave DB promote and becomes master DB. 
+
+Master DB takes care of write operation and slave DB takes care of read operation and there 
+can be many slaves. 
+
+ 
+
+Similar is the situation between application server. If a server fails, will the whole application 
+be down? NO. 
+
+ 
+
+We have handle failure, if any things fails, our system will still be up. 
+
+ 
+
+5. Cache 
+
+ 
+
+ 
+
+To improve performance, we use cache. Where should we apply cache? 
+
+ 
+
+0 ß 
+ 
+
+ 
+
+To apply cache: 
+
+ 
+
+Whenever our application server talks to DB. It is a network call. IT takes a lot of time. It's an expensive call. 
+
+ 
+
+When an application need to write data / read data. DB operations are very expensive. 
+
+ 
+
+Consider DB operations are VVVVVVVVVV expensive. 
+
+ 
+
+So instead of going to DB each time, if we check in cache, if there is data in cache or not. 
+
+ 
+
+Now the mid-tier or application server can first call  cache. Now if cache have data, it is considered as hit. If cache does not have data, then application have to go through DB. We call it cache miss. 
+
+ 
+
+So now whatever request comes to application server, first the request will go to cache, If it found data in cache, it will fulfil the request from there. There is no need to go to DB. 
+
+ 
+
+Otherwise, we will have to go to DB, and we will have to write that in cache. And then return. 
+
+ 
+
+So from cache, our performance got increased, we have saved DB calls here. 
+
+
+6. CDN 
+
+Content Delivery Network 
+
+ 
+
+When application setup cache, a TTL is defined which is known as  Time To Live. TTL could be 48 hours, 
+24 hours, 7 days, etc. Depending upon the application requirement. Whenever TTL expires, data will be 
+removed. 
+
+ 
+
+CDN does caching but all those who does caching are not CDN. 
+
+ 
+
+Suppose we are caching, Let say Redis, but it's not a CDN. 
+
+ 
+
+CDN has caching capability but CDN also has some other functionality. 
+
+ 
+
+Where CDN is used?? 
+ 
+
+When our users are distributed all over the  world, the user which I knew will get response quickly. 
+
+ 
+
+But for others, there is latency problem.  
+
+ 
+
+This problem is solved by CDN. 
+
+We put CDN node in all countries? 
+
+What does CDN do? 
+ 
+
+CDN does the caching of static data, like HTMP pages, Video, CSS files, Those information which 
+change very less frequently, We keep that in CDN. 
+
+ 
+
+Whenever a request comes, it will go to nearest server.  USA user request using url. If that url 
+has already been accessed by this CDN, then it willl return same response from there only. 
+
+ 
+
+If there is no data in that CDN, then it will asks its nearest neighbour CDN, if it has data. If 
+that CDN also does not have data , then will go to original DB. 
+
+ 
+
+Performance has increased and security has increased, because its not directly accessing DB server.  
+
+ 
+
+There are many attacks like DDOS attack, then we enable our CDN with advanced technology,  
+
+We can add many features in CDN. We can make our CDN intelligent enough to check if request is sent 
+by a bot or not. Before coming to original server, CDN will take action. 
+
+ 
+
+We dont need many DB server, so cost cutting. 
+
+ 
+
+Performance inc, security inc. 
+
+ 
+
+The position of CDN? Client can go to CDN. 
+
+ 
+
+Before even going to load balancer, client will got to CDN. And if CDN have data, it will return it 
+to client. If its does not have, then that CDN will checkout the nearest neighbour CDN, it that also does not have, then the request will hit load balancer.  
+
+7. Data Center 
+
+ 
+
+We can have many data center. 
+
+
+Now load balancer will send requests to different data centers. 
+
+Load balancer will send request to nearest data center.  
+
+20 : 35 / 35 : 1 3 
+ 
+
+Here we have multiple advantage: 
+
+Suppose data center of India is down, then load balancer will send fulfill all its request from US data center. But we may no find that user data in US. To solve that, there ia a replications , DB replication between the Geo. Thus, the load on a data center decreases.  
+
+ρσι.ι 
+ 
+
+Here also we have CDN and application talks to cache too. 
+
+ 
+
+ 
+
+8. Messaging Queue. 
+
+ 
+
+Why do we need messaging queue?? 
+ 
+
+RabbitMQ, Kafka 
+
+ 
+
+We have producer in this. Producer pushes a message into messaging queue. And there are different subscribers. It brings the asynchronous nature in our codebase. 
+
+ 
+
+Whats the heaviest load operation? Send email, notification, These operation are async. Here message is pushed to message queue, Now subscriber will subscribe and get the data bbut it may fail too. Then data will reach to requeue, so subscriber can retry too.  
+
+
+Here take a Rabbit MQ, we have a exchange and then queue Q1, Q2, etc. 
+
+ 
+
+There is binding between exchange and Multiple queue.  
+
+ 
+
+Producer sends routing key to exchange. Exchange see routing key, it compares it with binding and 
+decides that in which queue, should I send data.  
+
+ 
+
+And depending upon the queue, which subscribers are listening to the queue. Those subscriber will 
+get notified. 
+
+
+There are many ways . 
+
+In fanout, exchange will message all queue, Which subsciber want to listen will liesten, other subcriber will ignore. 
+
+Here we can send to more than one queue. No exact comparison, wild character comparision(*)  
+
+Messaging queue will bring async nature. 
+
+We will add a messaging queue to application server. Whatever data we have to put, we will put in messaging queue, other subscriber/ application will read that data if they want to. 
+
+
+So, from here asynchronous nature has come, With asynchronous nature, we can process our request fast. 
+
+ 
+
+ 
+
+Database Scaling 
+
+There are two types of database scaling. - Vertical and Horizontal. 
+In our database, we have master/slave.  
+
+
+Vertical scaling says that add more CPU and RAM to our server. So when we get more request, 
+CPU and RAM should be able to handle it. 
+
+Dis – There is always a limit to increase CPU/RAM. 
+
+
+Horizontal scaling says that add more DB nodes. This is implemented by sharding. 
+
+Row-wise divide – Horizontal Sharding. Different rows data are put in different tables. 
+
+
+All the name from A-P will go in shard T1 and All the name starting from Q-Z, will go into shard T2. 
+
+Vertical sharding – column wise divide. 
+
+Horizonatal sharding is better.  
+
+ 
+
+Drawbacks of sharding -  
+
+If there is more names starting with A, so that will go in shard T1. Thus Shard T1 will have more fill up and we will have to shard T1 again into smaller shards. 
+
+We can have sharding trees. 
+
+Now the rows are divided, and we want o join. But here we won't be able to join.  
+
+We can solve it using denormalise. Do denormalise and save join.  
+
+ 
+
+And the problem that it’s a making a tree? How to solve that? 
+
+We solve that using consistent hashing. 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+  
+
+ 
